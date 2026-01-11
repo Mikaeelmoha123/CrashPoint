@@ -1,4 +1,4 @@
----<?php
+-<?php
 /**
  * CrashPoint Setup Checker
  * Place this file in your crashpoint root folder
@@ -261,3 +261,4 @@ $results[] = [
 </body>
 
 </html>
+
