@@ -25,6 +25,3 @@ if ($user_type === 'authority') {
 }
 exit();
 ?>
-
-
-
