@@ -133,7 +133,7 @@ if (isset($_POST['register'])) {
                         <span id="fullNameError" class="error"></span>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row"> 
                         <div class="form-group col-md-6">
                             <label for="email">Email: <span class="required">*</span></label>
                             <input type="email" class="form-control" id="email" name="email" 
@@ -141,7 +141,7 @@ if (isset($_POST['register'])) {
                                    value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
                             <span id="emailError" class="error"></span>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">       
                             <label for="phone">Phone Number: <span class="required">*</span></label>
                             <input type="tel" class="form-control" id="phone" name="phone" 
                                    placeholder="+254700000000"

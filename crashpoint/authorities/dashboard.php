@@ -1,5 +1,11 @@
 <?php
 session_start();
+
+// Prevent caching to stop back button access after logout
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/crashpoint/includes/db.php';
 
 // Check if user is logged in
@@ -7,6 +13,35 @@ if (!isset($_SESSION['authority_id']) || $_SESSION['user_type'] !== 'authority')
     header("Location: login.php");
     exit();
 }
+
+// Session timeout - 3 minutes (180 seconds)
+$timeout_duration = 180;
+
+// Check if last activity timestamp exists
+if (isset($_SESSION['last_activity'])) {
+    $elapsed_time = time() - $_SESSION['last_activity'];
+    
+    // If more than 3 minutes have passed, destroy session and redirect to login
+    if ($elapsed_time > $timeout_duration) {
+        // Clear all session variables
+        $_SESSION = array();
+        
+        // Destroy the session cookie
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time()-3600, '/');
+        }
+        
+        // Destroy the session
+        session_destroy();
+        
+        // Redirect to login page
+        header("Location: login.php");
+        exit();
+    }
+}
+
+// Update last activity timestamp
+$_SESSION['last_activity'] = time();
 
 $authority_name = $_SESSION['authority_name'];
 $authority_role = $_SESSION['authority_role'];
@@ -183,5 +218,39 @@ $authority_id = $_SESSION['authority_id'];
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+        // Auto logout after 3 minutes of inactivity
+        let inactivityTime = function () {
+            let time;
+            
+            // Reset timer on user activity
+            window.onload = resetTimer;
+            document.onmousemove = resetTimer;
+            document.onkeypress = resetTimer;
+            document.onclick = resetTimer;
+            document.onscroll = resetTimer;
+            
+            function logout() {
+                // Redirect directly to login page
+                window.location.href = 'login.php';
+            }
+            
+            function resetTimer() {
+                clearTimeout(time);
+                // 3 minutes = 180000 milliseconds
+                time = setTimeout(logout, 180000);
+            }
+        };
+        
+        // Initialize inactivity timer
+        inactivityTime();
+        
+        // Prevent back button after logout
+        window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
+        };
+    </script>
 </body>
 </html>
