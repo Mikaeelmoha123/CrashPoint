@@ -83,6 +83,88 @@ $driver_id = $_SESSION['driver_id'];
             font-size: 16px;
             margin-top: 10px;
         }
+        
+        /* Emergency Report Button Styles */
+        .emergency-report-section {
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .emergency-report-btn {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            border: none;
+            border-radius: 15px;
+            padding: 40px 60px;
+            font-size: 32px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .emergency-report-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(220, 53, 69, 0.6);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .emergency-report-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .emergency-report-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .emergency-report-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .emergency-report-btn .btn-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .emergency-icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .emergency-subtitle {
+            font-size: 14px;
+            margin-top: 15px;
+            color: #6c757d;
+            font-weight: normal;
+        }
     </style>
 </head>
 <body>
@@ -102,7 +184,7 @@ $driver_id = $_SESSION['driver_id'];
                         <a class="nav-link" href="#">My Reports</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Submit Report</a>
+                        <a class="nav-link" href="report_template.php">Submit Report</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Profile</a>
@@ -122,6 +204,17 @@ $driver_id = $_SESSION['driver_id'];
                 <h2>Welcome back, <?php echo htmlspecialchars($driver_name); ?>! 👋</h2>
                 <p class="text-muted">Here's an overview of your crash reporting activity.</p>
             </div>
+        </div>
+
+        <!-- EMERGENCY REPORT BUTTON -->
+        <div class="emergency-report-section">
+            <a href="report_template.php" class="emergency-report-btn">
+                <div class="btn-content">
+                    <span class="emergency-icon">🚨</span>
+                    Report Crash/Incident
+                </div>
+            </a>
+            <p class="emergency-subtitle">Click here to immediately report a road accident or incident</p>
         </div>
 
         <!-- Statistics Cards -->
@@ -159,7 +252,7 @@ $driver_id = $_SESSION['driver_id'];
                     <div class="card-body">
                         <h5 class="card-title">Recent Reports</h5>
                         <div class="alert alert-info">
-                            No reports submitted yet. Click "Submit Report" to file your first crash report.
+                            No reports submitted yet. Click the red button above to file your first crash report.
                         </div>
                     </div>
                 </div>
@@ -171,9 +264,9 @@ $driver_id = $_SESSION['driver_id'];
             <div class="col-md-6">
                 <div class="card dashboard-card">
                     <div class="card-body text-center p-5">
-                        <h3>📝 Submit New Report</h3>
+                        <h3>📋 Submit New Report</h3>
                         <p class="text-muted">Report a road incident or crash</p>
-                        <a href="#" class="btn btn-primary btn-lg">Submit Report</a>
+                        <a href="report_template.php" class="btn btn-primary btn-lg">Submit Report</a>
                     </div>
                 </div>
             </div>
