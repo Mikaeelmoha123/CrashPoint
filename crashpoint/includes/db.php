@@ -35,4 +35,7 @@ function handleDatabaseError($error) {
     error_log("Database Error: " . $error);
     return "An error occurred. Please try again later.";
 }
+
 ?>
+
+
