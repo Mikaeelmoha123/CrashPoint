@@ -1,4 +1,4 @@
---<?php
+<?php
 session_start();
 
 // Prevent caching to stop back button access after logout
@@ -321,4 +321,5 @@ $driver_id = $_SESSION['driver_id'];
     </script>
 </body>
 </html>
+
 
